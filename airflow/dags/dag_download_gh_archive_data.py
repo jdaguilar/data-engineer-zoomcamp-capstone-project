@@ -41,7 +41,7 @@ with DAG(
     download_data_task = PythonOperator(
         task_id='download_data',
         python_callable=download_data,
-        op_kwargs={'date': '{{ ds }}', 'hour': '{{ execution_date.hour - 1}}'},
+        op_kwargs={'date': '{{ ds }}', 'hour': '{{ execution_date.hour}}'},
     )
 
     end_task = DummyOperator(task_id='end_task')
