@@ -10,8 +10,8 @@ from utils.download_gh_data import download_data
 # initializing the default arguments
 default_args = {
 		'start_date': datetime(2023, 1, 1),
-		'retries': 3,
-		'retry_delay': timedelta(minutes=5)
+		'retries': 5,
+		'retry_delay': timedelta(hours=2)
 }
 
 with DAG(
