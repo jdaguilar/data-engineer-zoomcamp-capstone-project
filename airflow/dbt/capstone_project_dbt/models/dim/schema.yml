@@ -1,0 +1,55 @@
+# schema.yml
+version: 2
+
+models:
+  - name: dim_event_types
+    columns:
+      - name: id
+        tests: [not_null]
+        type: integer
+      - name: event_type
+        tests: [not_null]
+        type: string
+
+  - name: dim_organizations
+    columns:
+      - name: org_id
+        tests: [not_null]
+        type: string
+      - name: org_name
+        tests: [not_null]
+        type: string
+      - name: org_url
+        tests: [not_null]
+        type: integer
+      - name: org_avatar_url
+        tests: [not_null]
+        type: string
+
+  - name: dim_users
+    columns:
+      - name: user_id
+        tests: [not_null]
+        type: string
+      - name: user_name
+        tests: [not_null]
+        type: string
+      - name: user_url
+        tests: [not_null]
+        type: integer
+      - name: user_avatar_url
+        tests: [not_null]
+        type: string
+
+  - name: dim_users
+    columns:
+      - name: repository_id
+        tests: [not_null]
+        type: string
+      - name: repository_name
+        tests: [not_null]
+        type: string
+      - name: repository_url
+        tests: [not_null]
+        type: integer
+
