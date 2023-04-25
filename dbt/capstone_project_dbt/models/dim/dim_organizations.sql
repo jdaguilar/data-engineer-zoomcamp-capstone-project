@@ -8,7 +8,7 @@ with distinct_organizations as (
     org_name,
     org_url,
     org_avatar_url
-  from {{ source('bigquery_sources', 'staging_gh_archive')}}
+  from {{ ref('staging_gh_archive_view') }}
 ),
 
 -- Define the final SELECT statement to create the distinct_organizations table

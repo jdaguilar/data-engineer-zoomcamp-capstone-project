@@ -7,7 +7,7 @@ with distinct_repositories as (
     repository_id,
     repository_name,
     repository_url
-  from {{ source('bigquery_sources', 'staging_gh_archive')}}
+  from {{ ref('staging_gh_archive_view') }}
 ),
 
 -- Define the final SELECT statement to create the dim_event_type table

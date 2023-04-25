@@ -1,0 +1,1 @@
+select * FROM capstone_project_dw.staging_gh_archive
