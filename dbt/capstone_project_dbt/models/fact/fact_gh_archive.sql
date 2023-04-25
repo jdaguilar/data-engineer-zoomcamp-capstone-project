@@ -4,8 +4,7 @@
 
 with staging_gh as (
   select *
-  from {{ source('bigquery_sources', 'staging_gh_archive')}}
-
+  from  {{ ref('staging_gh_archive_view') }}
 ),
 
 dim_event_type as (

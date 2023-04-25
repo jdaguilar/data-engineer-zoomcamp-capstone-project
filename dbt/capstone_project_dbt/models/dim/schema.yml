@@ -4,9 +4,6 @@ version: 2
 models:
   - name: dim_event_types
     columns:
-      - name: id
-        tests: [not_null]
-        type: integer
       - name: event_type
         tests: [not_null]
         type: string
@@ -41,7 +38,7 @@ models:
         tests: [not_null]
         type: string
 
-  - name: dim_users
+  - name: dim_repositories
     columns:
       - name: repository_id
         tests: [not_null]
@@ -51,5 +48,5 @@ models:
         type: string
       - name: repository_url
         tests: [not_null]
-        type: integer
+        type: string
 

@@ -4,7 +4,7 @@
 -- Define a CTE to get distinct event types from your source table
 with distinct_event_types as (
   select distinct event_type
-  from {{ source('bigquery_sources', 'staging_gh_archive')}}
+  from  {{ ref('staging_gh_archive_view') }}
 ),
 
 -- Define the final SELECT statement to create the dim_event_type table
