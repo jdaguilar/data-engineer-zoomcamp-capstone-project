@@ -44,7 +44,7 @@ select_statement as (
     left join dim_repositories dr on stg.repository_id = dr.repository_id
     left join dim_organizations do on stg.org_id = do.org_id
     left join dim_event_type de on stg.event_type = de.event_type 
-    order by stg.created_at 
+    -- order by stg.created_at 
 )
 
 -- Define the final CREATE TABLE statement to create the dim_event_type table

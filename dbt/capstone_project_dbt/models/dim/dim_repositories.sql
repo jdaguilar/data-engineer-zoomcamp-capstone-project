@@ -18,7 +18,7 @@ select_statement as (
     repository_url  
   from distinct_repositories
   where repository_id is not null
-  order by repository_id asc
+  -- order by repository_id asc
 )
 
 -- Define the final CREATE TABLE statement to create the dim_event_type table
