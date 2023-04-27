@@ -1,6 +1,5 @@
 
 import argparse
-import os
 
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
@@ -9,34 +8,28 @@ import pyspark.sql.types as T
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--year", help="Year of the GH archive to process.", required=True)
-    parser.add_argument("--month", help="Month of the GH archive to process.", required=True)
-    parser.add_argument("--day", help="Day of the GH archive to process.", required=True)
+    parser.add_argument("--date", help="Date in format YYYY-MM-DD", required=True)
     parser.add_argument("--source_files_pattern", help="Source files pattern for the GH archive to process.", required=True)
     parser.add_argument("--destination_files_pattern", help="Destination files pattern for the GH archive to process.", required=True)
 
-    # parser.add_argument("--hour", help="Hour of the GH archive to process.")   
-    
     args = parser.parse_args()
-    year = args.year
-    month = args.month
-    day = args.day
+    date = args.date
 
     read_filepath = args.source_files_pattern
     write_filepath = args.destination_files_pattern
-    read_filepath=read_filepath.format(year, month, day)
-    print(f"date received: {year}-{month}-{day}")
-    
-    spark = SparkSession.builder.appName('GCSFilesRead').getOrCreate()
+    read_filepath=read_filepath.format(date)
+    print(f"date received: {date}")
+
+    spark = SparkSession.builder.master("yarn").appName('GCSFilesRead').getOrCreate()
 
     print(f"read_filepath: {read_filepath}")
     df = spark.read.json(read_filepath)
 
     allowed_events = [
-        "PushEvent", 
-        "ForkEvent", 
-        "PublicEvent", 
-        "WatchEvent", 
+        "PushEvent",
+        "ForkEvent",
+        "PublicEvent",
+        "WatchEvent",
         "PullRequestEvent",
     ]
 
@@ -71,13 +64,13 @@ if __name__ == "__main__":
 
 
     # write the DataFrame to GCS partitioned by year, month, and day and bucketed by hour and minute
+    date = date.replace("-", "")
+
     main_df.write \
     .partitionBy("year", "month", "day") \
     .bucketBy(24, "hour") \
     .sortBy("hour", "minute") \
     .option("path", write_filepath) \
     .option("header", True) \
-    .mode("overwrite") \
-    .saveAsTable("tablename")
-
-
+    .mode("append") \
+    .saveAsTable(f"table{date}")
