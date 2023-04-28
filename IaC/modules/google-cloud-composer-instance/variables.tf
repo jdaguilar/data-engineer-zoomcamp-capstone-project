@@ -16,3 +16,5 @@ variable  dataproc_cluster_name { }
 variable  data_warehouse_bucket_name { }
 
 variable  cloud_fuction_link { }
+
+variable pyspark_repo_bucket_name { }
