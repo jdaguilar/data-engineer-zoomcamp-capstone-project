@@ -41,4 +41,5 @@ module "google_cloud_composer_instance" {
   dataproc_cluster_name      = module.google_cloud_dataproc_instance.dataproc_cluster_name
   data_warehouse_bucket_name = module.google_cloud_storage_bucket.data_warehouse_bucket_name
   cloud_fuction_link         = module.google_cloud_function_instance.cloud_fuction_link
+  pyspark_repo_bucket_name   = module.google_cloud_storage_bucket.pyspark_repo_bucket_name
 }
