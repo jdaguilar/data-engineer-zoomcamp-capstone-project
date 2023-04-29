@@ -40,7 +40,7 @@ PYSPARK_JOB = {
     "pyspark_job": {
         "main_python_file_uri": f"{DATAPROC_PYTHON_SCRIPTS_PATH}/process_gh_archive_dataproc.py",
         "args": [
-            "--date", "{{ ds }}",
+            "--date", "{{ yesterday_ds }}",
             "--source_files_pattern", GOOGLE_CLOUD_STORAGE_SOURCE_FILES,
             "--destination_files_pattern", GOOGLE_CLOUD_STORAGE_DESTINATION_FILES,
         ]

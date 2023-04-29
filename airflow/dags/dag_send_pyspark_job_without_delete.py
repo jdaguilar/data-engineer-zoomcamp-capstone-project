@@ -37,7 +37,7 @@ PYSPARK_JOB = {
     "pyspark_job": {
         "main_python_file_uri": f"{DATAPROC_PYTHON_SCRIPTS_PATH}/process_gh_archive_dataproc.py",
         "args": [
-            "--date", "{{ ds }}",
+            "--date", "{{ yesterday_ds }}",
             "--source_files_pattern", GOOGLE_CLOUD_STORAGE_SOURCE_FILES,
             "--destination_files_pattern", GOOGLE_CLOUD_STORAGE_DESTINATION_FILES,
         ]
@@ -46,7 +46,7 @@ PYSPARK_JOB = {
 
 
 with DAG(
-    dag_id='process_raw_gh_archive_data',
+    dag_id='process_raw_gh_archive_data_without_delete',
     default_args=default_args,
     schedule='0 1 * * *',
 ) as dag:
