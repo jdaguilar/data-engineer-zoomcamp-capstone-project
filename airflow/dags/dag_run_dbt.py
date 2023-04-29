@@ -12,8 +12,8 @@ DBT_RUN_JOB_ID = Variable.get("DBT_RUN_JOB_ID")
 
 with DAG(
     dag_id="dbt_cloud_provider_eltml",
-    start_date=datetime(2023, 1, 1),
-    schedule_interval=None,
+    start_date=datetime(2023, 1, 2),
+    schedule_interval="0 3 * * *",
     catchup=False,
 ) as dag:
     start_dbt = DummyOperator(task_id="start_dbt")
