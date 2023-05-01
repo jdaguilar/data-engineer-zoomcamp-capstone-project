@@ -1,42 +1,41 @@
+
 # Problem description
 
-El objetivo en este proyecto es demostrar un caso de ejemplo de como aplicar un Data Pipeline para procesar los datos de GitHub Archive.
+The objective of this project is to demonstrate how to implement a data pipeline to process data from GitHub Archive.
 
-Si bien ya existe un ejemplo de un Data Warehouse en BigQuery, la idea principal es desarrollar el data pipeline para solo traerse los datos necesarios para el dashboard.
+Although there is already an example of GitHub Archive data in BigQuery, the idea is to only bring necessary ones.
 
-El resultado en este proyecto es conseguir un Data Ware House para analizar la actividad en GitHub desde enero de 2023. Específicamente, la idea es encontrar cuales son los repositorios que han tenido mayor actividad en este periodo, cuales han sido los usuarios que mas han aportado a los repositorios, asi como las organizaciones y sobretodo los lenguajes que manejan.
+The goal is to build a Data Warehouse to analyze activity on GitHub since January 1st 2023. Identify which repositories have had the most activity during this period, which users have contributed the most to the repositories, as well as the organizations and languages used.
 
-Para mas información del dataset consultar:
-https://www.gharchive.org/
+For more information on the dataset, please visit: https://www.gharchive.org/
 
 # Cloud
 
-La nube utilizada es Google Cloud, y los servicios que se utilizan son:
+The cloud used is Google Cloud, and the services used are:
 
-- Cloud Function, para traer la data cruda de GH
-- Dataproc: Servicio de Google Cloud para correr un entorno de Spark, se utiliza para correr scripts hechos en pyspark
+- Cloud Function, to retrieve the raw data from GH
+- Dataproc: Google Cloud service to run a Spark environment, used to run pyspark scripts
 - Cloud Composer: Apache Airflow
+- BigQuery: Data Warehouse
 
-Adicionalmente, se utiliza DBT cloud para construir las diferentes tablas en el Data Warehouse. 
+In addition, DBT cloud is used to build the different tables in the Data Warehouse.
 
-## Estructura del proyecto
-
-La estructura del proyecto, que se implementa utilizando Terraform, es la siguiente:
+# Project Structure
+The project structure, implemented using Terraform, is as follows:
 
 ![](assets/gcp_project_schema.png)
 
-1. El Cloud Function es triggered para hacer un API request a GitHub Archive para un dia y hora específico.
+1. Cloud Function is triggered to make an API request to GitHub Archive for a specific day and hour. Then data from GitHub Archive is retrieved.
 
-2. Se recupera la data de GitHub Archive data para ese dia y hora específico.
+2. The retrieved data is saved into the Data Lake, inside a Cloud Storage Bucket. The path for raw data is `gh-archive/raw`, saved by day. The above means for each day, we'll have 24 files downloaded (1 per hour).
 
-3. Los datos recuperados se guardan en el Data Lake, dentro de un Cloud Storage Bucket, en la ruta de gh-archive/raw. Los datos se guardan por dia, lo que quiere decir que por cada día, se deben descargar 24 archivos (1 por hora).
+3. Every day, a pyspark Job is run in Dataproc to process the downloaded data from the previous day. Results are saved in the `gh-archive/processed` path partitioned by year, month, and day, respectively.
 
-4. Cada día, se ejecuta un Job de pyspark en Dataproc para procesar los datos descargados del dia anterior. 
-
-5. Los resultados se guardan en la ruta gh-archive/processed y se particionarán los datos por año, mes y día, respectivamente.
-
-6. Desde BigQuery, se lee la ruta gh-archive/processed para crear una tabla externa soblre la cual hacer queries. Esa tabla se llama staging_gh_archive_view, y es la base para poder crear los otros modelos utilizando DBT, con la cual se crea el siguiente modelo:
+4. From BigQuery, the `gh-archive/processed` path is read to create an external table on which to make queries. That table is called `staging_gh_archive_view`, and it's the base for creating other models using DBT:
 
 ![](assets/dbt_model.PNG)
 
-7. Finalmente, se utiliza Looker Studio para examinar la data y para poder resolver las preguntas relevantes a nivel de negocio
+5. Finally, Looker Studio is used to examine the data and to be able to answer relevant questions such as:
+
+- number of commits per day
+- number of commits per organization, user, and repository
