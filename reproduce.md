@@ -60,6 +60,17 @@ Go  to https://www.getdbt.com/ and creates a free account. After creating your a
     - Set the environment previously created
     - In commands, set dbt run
 
+## 3. Run Terraform
+
+First initialize Terraform.
+```
+terraform init
+```
+
+Then, run the following command.
+```
+terraform apply
+```
 
 # References:
 
