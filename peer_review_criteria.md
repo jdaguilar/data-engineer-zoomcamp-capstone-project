@@ -1,5 +1,7 @@
 # Peer review criteria
 
+Please cosider this criteria to evaluate this project.
+
 1. **Problem description**
 
 - 0 points: Problem is not described
