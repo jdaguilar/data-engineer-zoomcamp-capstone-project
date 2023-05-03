@@ -10,7 +10,12 @@ The goal is to build a Data Warehouse to analyze activity on GitHub since Januar
 
 For more information on the dataset, please visit: https://www.gharchive.org/
 
-# Cloud
+# Technologies used
+
+- Terraform
+- Pyspark
+- Airflow
+- DBT
 
 The cloud used is Google Cloud, and the services used are:
 
