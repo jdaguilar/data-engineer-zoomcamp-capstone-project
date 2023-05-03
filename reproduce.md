@@ -72,8 +72,11 @@ Then, run the following command.
 terraform apply
 ```
 
-## 4. Connect Cloud Storage with BigQuery
+## 4. Create stage table in BigQuery
 
+Create a table called `staging_gh_archive` inside Bigquery dataset `capstone_project_dw`.
+
+Go to BigQuery, select your project, and then select `capstone_project_dw`,
 
 # References:
 
