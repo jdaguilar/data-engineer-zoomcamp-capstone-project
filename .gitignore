@@ -184,3 +184,6 @@ env_vars.json
 
 # Ignore index.zip
 index.zip
+
+#
+capstone_local
