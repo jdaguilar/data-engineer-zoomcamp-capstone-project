@@ -72,6 +72,9 @@ Then, run the following command.
 terraform apply
 ```
 
+## 4. Connect Cloud Storage with BigQuery
+
+
 # References:
 
 https://docs.getdbt.com/docs/cloud/git/connect-github
