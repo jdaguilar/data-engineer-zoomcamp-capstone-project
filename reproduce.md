@@ -47,18 +47,40 @@ It's necessary to grant specific permission to the `client_email` provided by th
 Go  to https://www.getdbt.com/ and creates a free account. After creating your account you need to create your project following the instructions:
 
 1. Choose a name in *Name your project* option.
+
 2. In *Choose a connection*, select BigQuery.
+
+    ![](assets/select_bq_dbt.png)
+
 3. In *Configure your environment*, upload the service account file.
+
+    ![](assets/conf_env_bq_dbt.png)
+
     - You have to configure *Development Credentials*, setting *dataset* field with the value `capstone_project_dw`.
+
+    ![](assets/set_dq_dataset_dbt.png)
+
 4. In *Setup a Repository*, choose GitHub:
+
+    ![](assets/set_github_dbt.png)
+
     - Yo need to sign in to github to enable DBT, then you'll able to choose `data-engineer-zoomcamp-capstone-project`
+
 5. Go to *Account Settings*, select project you have created, and change *Project subdirectory* to `dbt/capstone_project_dbt`
+
 6. Select *Develop* tab and click on *initialize dbt project*.
+
+    ![](assets/initialize_project_git_dbt.png)
+
 7. Go to Deploy -> Environments and then create an environment, choose a *Name* for this environment, and in *Deployment Credentials* change dataset to `capstone_project_dw`.
+
+    ![](assets/set_pdb_dbt_project.png)
 
 8. Finally, Go to Deploy -> Jobs and then click on *Create Job*
     - Set the environment previously created
     - In commands, set dbt run
+
+    ![](assets/set_job_run_dbt.png)
 
 ## 3. Run Terraform
 
@@ -76,9 +98,17 @@ terraform apply
 
 Create a table called `staging_gh_archive` inside Bigquery dataset `capstone_project_dw`.
 
-Go to BigQuery, select your project, and then select `capstone_project_dw`,
+Go to BigQuery, select your project, and then select `capstone_project_dw`, then select *Create Table*
+
+![](assets/create_table_bq.png)
+
+Configure new table like this, and then click on *Create Table*:
+
+![](assets/create_external_table_dbt.png)
+
 
 # References:
 
 https://docs.getdbt.com/docs/cloud/git/connect-github
+
 https://docs.getdbt.com/docs/quickstarts/dbt-cloud/bigquery#generate-bigquery-credentials
